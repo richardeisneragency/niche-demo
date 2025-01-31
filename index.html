@@ -173,11 +173,28 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        // Load script and initialize
+        window.onload = function() {
+            // Initialize variables
+            window.keywords = [];
+            window.currentKeywordIndex = 0;
+            window.typingInterval = null;
+            window.customData = null;
+
+            // Get DOM elements
+            window.searchBox = document.getElementById('searchBox');
+            window.suggestionsContainer = document.getElementById('suggestions');
+            window.keywordInput = document.getElementById('keywordInput');
+
+            // Load and execute the main script
             const script = document.createElement('script');
             script.src = 'script.js';
+            script.onload = function() {
+                // Initialize after script loads
+                init();
+            };
             document.body.appendChild(script);
-        });
+        };
     </script>
 </body>
 </html>

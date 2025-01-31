@@ -1,13 +1,13 @@
 // Initialize variables
-let keywords = [];
-let currentKeywordIndex = 0;
-let typingInterval;
-let customData = null;
+window.keywords = [];
+window.currentKeywordIndex = 0;
+window.typingInterval;
+window.customData = null;
 
 // Get DOM elements
-const searchBox = document.getElementById('searchBox');
-const suggestionsContainer = document.getElementById('suggestions');
-const keywordInput = document.getElementById('keywordInput');
+window.searchBox = document.getElementById('searchBox');
+window.suggestionsContainer = document.getElementById('suggestions');
+window.keywordInput = document.getElementById('keywordInput');
 
 // Initialize from URL parameters and start demo
 function init() {
@@ -15,10 +15,10 @@ function init() {
     const dataParam = urlParams.get('data');
     if (dataParam) {
         try {
-            customData = JSON.parse(decodeURIComponent(dataParam));
-            keywords = customData.map(item => item.k);
+            window.customData = JSON.parse(decodeURIComponent(dataParam));
+            window.keywords = window.customData.map(item => item.k);
             // Auto-populate keywords
-            keywordInput.value = keywords.join('\n');
+            window.keywordInput.value = window.keywords.join('\n');
             // Start simulation after a short delay
             setTimeout(simulateTyping, 500);
         } catch (e) {
@@ -28,25 +28,25 @@ function init() {
 }
 
 function simulateTyping() {
-    if (currentKeywordIndex >= keywords.length) {
-        currentKeywordIndex = 0;
+    if (window.currentKeywordIndex >= window.keywords.length) {
+        window.currentKeywordIndex = 0;
         return;
     }
 
-    const keyword = keywords[currentKeywordIndex];
+    const keyword = window.keywords[window.currentKeywordIndex];
     let currentChar = 0;
 
     // Clear previous interval if exists
-    if (typingInterval) clearInterval(typingInterval);
+    if (window.typingInterval) clearInterval(window.typingInterval);
 
     // Clear search box
-    searchBox.value = '';
+    window.searchBox.value = '';
     
     // Simulate typing
-    typingInterval = setInterval(() => {
+    window.typingInterval = setInterval(() => {
         if (currentChar <= keyword.length) {
             const currentText = keyword.substring(0, currentChar);
-            searchBox.value = currentText;
+            window.searchBox.value = currentText;
             
             if (currentText.length > 0) {
                 // Fetch suggestions for the current text
@@ -55,10 +55,10 @@ function simulateTyping() {
             
             currentChar++;
         } else {
-            clearInterval(typingInterval);
+            clearInterval(window.typingInterval);
             // Wait 2 seconds before moving to next keyword
             setTimeout(() => {
-                currentKeywordIndex++;
+                window.currentKeywordIndex++;
                 simulateTyping();
             }, 2000);
         }
@@ -67,8 +67,8 @@ function simulateTyping() {
 
 function fetchSuggestions(query, isComplete) {
     // If we have custom data, use it
-    if (customData) {
-        const currentEntry = customData.find(item => item.k === keywords[currentKeywordIndex]);
+    if (window.customData) {
+        const currentEntry = window.customData.find(item => item.k === window.keywords[window.currentKeywordIndex]);
         if (currentEntry) {
             // Get organic suggestions
             let suggestions = generateOrganicSuggestions(query);
@@ -113,8 +113,8 @@ function generateOrganicSuggestions(query) {
 }
 
 function displaySuggestions(suggestions, targetToHighlight) {
-    suggestionsContainer.innerHTML = '';
-    suggestionsContainer.style.display = 'block';
+    window.suggestionsContainer.innerHTML = '';
+    window.suggestionsContainer.style.display = 'block';
     
     suggestions.forEach(suggestion => {
         const div = document.createElement('div');
@@ -127,14 +127,14 @@ function displaySuggestions(suggestions, targetToHighlight) {
             div.textContent = suggestion;
         }
         
-        suggestionsContainer.appendChild(div);
+        window.suggestionsContainer.appendChild(div);
     });
 }
 
 // Hide suggestions when clicking outside
 document.addEventListener('click', (e) => {
-    if (!suggestionsContainer.contains(e.target) && e.target !== searchBox) {
-        suggestionsContainer.style.display = 'none';
+    if (!window.suggestionsContainer.contains(e.target) && e.target !== window.searchBox) {
+        window.suggestionsContainer.style.display = 'none';
     }
 });
 
