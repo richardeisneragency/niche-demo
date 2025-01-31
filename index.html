@@ -33,6 +33,65 @@
             background: white;
             border-radius: 15px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+        .intro-text {
+            margin: 0;
+        }
+        .read-more-btn {
+            background: #1a73e8;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            white-space: nowrap;
+            transition: background-color 0.2s;
+        }
+        .read-more-btn:hover {
+            background: #1557b0;
+        }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 800px;
+            width: 100%;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            padding: 5px;
+            line-height: 1;
+        }
+        .modal-close:hover {
+            color: #333;
         }
         .highlight-text {
             color: #1a73e8;
@@ -160,8 +219,17 @@
 <body>
     <h1 class="main-title">Top Autosuggest Demo</h1>
     <div class="intro-section">
-        Ranking at the top of Google search results is incredibly challenging for most businesses, especially in highly competitive industries where traditional SEO and paid ads often fall short. However, with our proprietary <span class="highlight-text">Top Autosuggest</span> technique, we can position your business above the competition—right in Google's autosuggest dropdown. Best of all, this <span class="exclusive-tag">opportunity is exclusive</span>—we only work with <span class="exclusive-tag">one business per category</span> in each market, meaning once a competitor secures their position, no one else can take advantage of this strategy. Don't miss the chance to dominate search visibility in your industry before your competition does!
+        <p class="intro-text">Ranking at the top of Google search results is incredibly challenging for most businesses...</p>
+        <button class="read-more-btn" onclick="showModal()">Read More</button>
     </div>
+
+    <div class="modal-overlay" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="hideModal()">&times;</button>
+            <p>Ranking at the top of Google search results is incredibly challenging for most businesses, especially in highly competitive industries where traditional SEO and paid ads often fall short. However, with our proprietary <span class="highlight-text">Top Autosuggest</span> technique, we can position your business above the competition—right in Google's autosuggest dropdown. Best of all, this <span class="exclusive-tag">opportunity is exclusive</span>—we only work with <span class="exclusive-tag">one business per category</span> in each market, meaning once a competitor secures their position, no one else can take advantage of this strategy. Don't miss the chance to dominate search visibility in your industry before your competition does!</p>
+        </div>
+    </div>
+
     <div class="container">
         <div class="panel">
             <h2>Keywords</h2>
@@ -187,6 +255,24 @@
         window.searchBox = document.getElementById('searchBox');
         window.suggestionsContainer = document.getElementById('suggestions');
         window.keywordInput = document.getElementById('keywordInput');
+
+        // Modal functions
+        function showModal() {
+            document.getElementById('modal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideModal() {
+            document.getElementById('modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideModal();
+            }
+        });
 
         // Load and execute the main script
         const script = document.createElement('script');
