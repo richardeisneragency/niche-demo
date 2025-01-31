@@ -28,8 +28,11 @@ function init() {
 }
 
 function simulateTyping() {
+    // Reset index if we've reached the end
     if (window.currentKeywordIndex >= window.keywords.length) {
         window.currentKeywordIndex = 0;
+        // Start over immediately
+        simulateTyping();
         return;
     }
 
