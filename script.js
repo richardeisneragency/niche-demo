@@ -4,6 +4,7 @@ window.currentKeywordIndex = 0;
 window.typingInterval;
 window.customData = null;
 window.titleElement = document.getElementById('title');
+window.businessCategoryElement = document.getElementById('business-category');
 
 // Get DOM elements
 window.searchBox = document.getElementById('searchBox');
@@ -24,6 +25,7 @@ function init() {
             // Update title with business category
             if (window.customData.c) {
                 window.titleElement.textContent = `Top Autosuggest for ${window.customData.c}`;
+                window.businessCategoryElement.textContent = `Business Category: ${window.customData.c}`;
             }
             // Start simulation after a short delay
             setTimeout(simulateTyping, 500);

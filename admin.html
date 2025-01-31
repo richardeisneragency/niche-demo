@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Top Autosuggest Demo</title>
+    <title>Admin - Autosuggest Demo</title>
     <style>
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
@@ -12,127 +12,235 @@
             background: #f8f9fa;
             color: #333;
         }
-        .container {
+        .main-title {
+            text-align: center;
+            color: #1a73e8;
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #1a73e8, #4285f4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 40px;
+            line-height: 1.6;
             max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .container {
             margin: 0 auto;
+            max-width: 1200px;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+        }
+        .panel {
+            flex: 1;
             background: white;
-            padding: 30px;
+            padding: 20px;
             border-radius: 12px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        h1 {
+        h2 {
             color: #1a73e8;
             margin-top: 0;
-            margin-bottom: 30px;
-            text-align: center;
+            margin-bottom: 20px;
         }
         .input-group {
-            margin-bottom: 25px;
+            margin-bottom: 15px;
         }
         label {
             display: block;
-            margin-bottom: 8px;
-            color: #444;
-            font-weight: 500;
-        }
-        input[type="text"], textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 14px;
-            background: #f8fafc;
-            color: #1a73e8;
-            font-family: monospace;
+            margin-bottom: 5px;
+            color: #666;
         }
         input[type="text"] {
-            height: 20px;
+            width: 100%;
+            padding: 8px;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 14px;
         }
-        textarea {
-            height: 150px;
-            resize: vertical;
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #1a73e8;
         }
         button {
             background: #1a73e8;
             color: white;
             border: none;
-            padding: 12px 24px;
-            border-radius: 24px;
-            font-size: 16px;
+            padding: 10px 20px;
+            border-radius: 6px;
             cursor: pointer;
+            font-size: 14px;
             transition: background-color 0.2s;
-            display: block;
-            margin: 0 auto;
         }
         button:hover {
             background: #1557b0;
         }
+        #keywordList {
+            margin-top: 20px;
+        }
+        .keyword-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            align-items: center;
+        }
+        .keyword-item span {
+            flex: 1;
+        }
+        .remove-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .remove-btn:hover {
+            background: #bb2d3b;
+        }
         #demoLink {
             margin-top: 20px;
             padding: 15px;
-            background: #f0f4ff;
-            border-radius: 8px;
-            display: none;
+            background: #e8f0fe;
+            border-radius: 6px;
             word-break: break-all;
         }
-        .description {
-            color: #666;
-            font-size: 0.9em;
-            margin-top: 4px;
+        .copy-btn {
+            margin-left: 10px;
+            background: #34a853;
+        }
+        .copy-btn:hover {
+            background: #2d8a46;
+        }
+        .category-panel {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Top Autosuggest Demo Setup</h1>
-        
+    <h1 class="main-title">Top Autosuggest Admin</h1>
+    <div class="subtitle">
+        <strong>Create Your Custom Autosuggest Demo</strong><br>
+        Enter your keywords and target suggestions below. Generate a shareable demo link to show your clients how their business name will appear in Google's autosuggest.
+    </div>
+    <div class="category-panel">
         <div class="input-group">
             <label for="businessCategory">Business Category:</label>
             <input type="text" id="businessCategory" placeholder="e.g., Dentists, Plumbers, Real Estate Agents">
-            <div class="description">Enter the type of business this demo is for</div>
         </div>
-
-        <div class="input-group">
-            <label for="keywordInput">Keywords (one per line):</label>
-            <textarea id="keywordInput" placeholder="Enter keywords, one per line"></textarea>
-            <div class="description">Enter each keyword that you want to demonstrate</div>
+    </div>
+    <div class="container">
+        <div class="panel">
+            <h2>Add Keywords and Targets</h2>
+            <div class="input-group">
+                <label for="keyword">Keyword:</label>
+                <input type="text" id="keyword" placeholder="Enter a keyword">
+            </div>
+            <div class="input-group">
+                <label for="target">Target Suggestion:</label>
+                <input type="text" id="target" placeholder="Enter the target suggestion">
+            </div>
+            <button onclick="addKeyword()">Add Keyword</button>
+            <div id="keywordList"></div>
         </div>
-
-        <div class="input-group">
-            <label for="targetInput">Target Suggestions (one per line):</label>
-            <textarea id="targetInput" placeholder="Enter target suggestions, one per line"></textarea>
-            <div class="description">Enter the suggestion that should appear for each keyword above (in the same order)</div>
+        <div class="panel">
+            <h2>Generate Demo Link</h2>
+            <p>Click the button below to generate a shareable demo link with your keywords:</p>
+            <button onclick="generateDemoLink()">Generate Demo Link</button>
+            <div id="demoLink" style="display: none;">
+                <p><strong>Your Demo Link:</strong></p>
+                <div style="display: flex; align-items: center;">
+                    <span id="demoUrl"></span>
+                    <button class="copy-btn" onclick="copyDemoLink()">Copy Link</button>
+                </div>
+            </div>
         </div>
-
-        <button onclick="generateDemoLink()">Generate Demo Link</button>
-        <div id="demoLink"></div>
     </div>
 
     <script>
+        let keywords = [];
+
+        function addKeyword() {
+            const keywordInput = document.getElementById('keyword');
+            const targetInput = document.getElementById('target');
+            const keyword = keywordInput.value.trim();
+            const target = targetInput.value.trim();
+
+            if (keyword && target) {
+                keywords.push({ k: keyword, t: target });
+                updateKeywordList();
+                keywordInput.value = '';
+                targetInput.value = '';
+            }
+        }
+
+        function removeKeyword(index) {
+            keywords.splice(index, 1);
+            updateKeywordList();
+        }
+
+        function updateKeywordList() {
+            const list = document.getElementById('keywordList');
+            list.innerHTML = '';
+
+            keywords.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'keyword-item';
+                div.innerHTML = `
+                    <span><strong>${item.k}</strong> → ${item.t}</span>
+                    <button class="remove-btn" onclick="removeKeyword(${index})">Remove</button>
+                `;
+                list.appendChild(div);
+            });
+        }
+
         function generateDemoLink() {
-            const keywords = document.getElementById('keywordInput').value.split('\n').filter(k => k.trim());
-            const targets = document.getElementById('targetInput').value.split('\n').filter(t => t.trim());
             const category = document.getElementById('businessCategory').value.trim();
             
             if (!category) {
                 alert('Please enter a business category');
                 return;
             }
-            
-            if (keywords.length !== targets.length) {
-                alert('Number of keywords must match number of target suggestions');
+
+            if (keywords.length === 0) {
+                alert('Please add at least one keyword');
                 return;
             }
 
             const data = {
                 c: category,
-                d: keywords.map((k, i) => ({ k: k.trim(), t: targets[i].trim() }))
+                d: keywords
             };
 
-            const demoUrl = `${window.location.origin}/index.html?data=${encodeURIComponent(JSON.stringify(data))}`;
-            const demoLinkElement = document.getElementById('demoLink');
-            demoLinkElement.innerHTML = `<strong>Demo Link:</strong><br>${demoUrl}`;
-            demoLinkElement.style.display = 'block';
+            const baseUrl = window.location.href.replace('admin.html', 'index.html');
+            const demoUrl = `${baseUrl}?data=${encodeURIComponent(JSON.stringify(data))}`;
+
+            document.getElementById('demoLink').style.display = 'block';
+            document.getElementById('demoUrl').textContent = demoUrl;
+        }
+
+        function copyDemoLink() {
+            const demoUrl = document.getElementById('demoUrl').textContent;
+            navigator.clipboard.writeText(demoUrl).then(() => {
+                alert('Demo link copied to clipboard!');
+            });
         }
     </script>
 </body>
