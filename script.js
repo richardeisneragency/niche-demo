@@ -9,8 +9,8 @@ const searchBox = document.getElementById('searchBox');
 const suggestionsContainer = document.getElementById('suggestions');
 const keywordInput = document.getElementById('keywordInput');
 
-// Initialize from URL parameters
-function initFromUrl() {
+// Initialize from URL parameters and start demo
+function init() {
     const urlParams = new URLSearchParams(window.location.search);
     const dataParam = urlParams.get('data');
     if (dataParam) {
@@ -19,7 +19,7 @@ function initFromUrl() {
             keywords = customData.map(item => item.k);
             // Auto-populate keywords
             keywordInput.value = keywords.join('\n');
-            // Start simulation
+            // Start simulation after a short delay
             setTimeout(simulateTyping, 500);
         } catch (e) {
             console.error('Error parsing URL data:', e);
@@ -122,7 +122,7 @@ function displaySuggestions(suggestions, targetToHighlight) {
         
         if (targetToHighlight && suggestion === targetToHighlight) {
             const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(suggestion)}`;
-            div.innerHTML = `<a href="${searchUrl}" target="_blank" style="text-decoration:none; color:inherit;"><span class="highlight">${suggestion}</span></a>`;
+            div.innerHTML = `<a href="${searchUrl}" target="_blank"><span class="highlight">${suggestion}</span></a>`;
         } else {
             div.textContent = suggestion;
         }
@@ -139,4 +139,4 @@ document.addEventListener('click', (e) => {
 });
 
 // Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', initFromUrl);
+document.addEventListener('DOMContentLoaded', init);
