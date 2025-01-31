@@ -75,21 +75,6 @@
             outline: none;
             border-color: #1a73e8;
         }
-        #startButton {
-            background: linear-gradient(45deg, #1a73e8, #4285f4);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 500;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        #startButton:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 6px rgba(26, 115, 232, 0.2);
-        }
         #searchPanel {
             position: relative;
         }
@@ -121,6 +106,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             z-index: 1000;
             overflow: hidden;
+            display: none;
         }
         .suggestion-item {
             padding: 12px 20px;
@@ -136,6 +122,8 @@
         .suggestion-item a {
             cursor: pointer;
             display: block;
+            text-decoration: none;
+            color: inherit;
         }
         .highlight {
             background-color: #ffeb3b;
@@ -173,28 +161,25 @@
     </div>
 
     <script>
-        // Load script and initialize
-        window.onload = function() {
-            // Initialize variables
-            window.keywords = [];
-            window.currentKeywordIndex = 0;
-            window.typingInterval = null;
-            window.customData = null;
+        // Initialize variables
+        window.keywords = [];
+        window.currentKeywordIndex = 0;
+        window.typingInterval = null;
+        window.customData = null;
 
-            // Get DOM elements
-            window.searchBox = document.getElementById('searchBox');
-            window.suggestionsContainer = document.getElementById('suggestions');
-            window.keywordInput = document.getElementById('keywordInput');
+        // Get DOM elements
+        window.searchBox = document.getElementById('searchBox');
+        window.suggestionsContainer = document.getElementById('suggestions');
+        window.keywordInput = document.getElementById('keywordInput');
 
-            // Load and execute the main script
-            const script = document.createElement('script');
-            script.src = 'script.js';
-            script.onload = function() {
-                // Initialize after script loads
-                init();
-            };
-            document.body.appendChild(script);
+        // Load and execute the main script
+        const script = document.createElement('script');
+        script.src = 'script.js';
+        script.onload = function() {
+            // Initialize after script loads
+            init();
         };
+        document.body.appendChild(script);
     </script>
 </body>
 </html>

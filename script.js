@@ -17,12 +17,13 @@ function init() {
     const dataParam = urlParams.get('data');
     if (dataParam) {
         try {
-            window.customData = JSON.parse(decodeURIComponent(dataParam));
-            window.keywords = window.customData.map(item => item.k);
-            // Auto-populate keywords
-            window.keywordInput.value = window.keywords.join('\n');
-            // Start simulation after a short delay
-            setTimeout(simulateTyping, 500);
+            const parsedData = JSON.parse(decodeURIComponent(dataParam));
+            if (Array.isArray(parsedData)) {
+                window.customData = parsedData;
+                window.keywords = parsedData.map(item => item.k);
+                window.keywordInput.value = window.keywords.join('\n');
+                setTimeout(simulateTyping, 500);
+            }
         } catch (e) {
             console.error('Error parsing URL data:', e);
         }
@@ -46,6 +47,7 @@ function simulateTyping() {
 
     // Clear search box
     window.searchBox.value = '';
+    window.suggestionsContainer.style.display = 'none';
     
     // Simulate typing
     window.typingInterval = setInterval(() => {
