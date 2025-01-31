@@ -118,9 +118,24 @@
         .copy-btn {
             margin-left: 10px;
             background: #34a853;
+            transition: all 0.2s ease;
         }
         .copy-btn:hover {
             background: #2d8a46;
+        }
+        .copy-btn.copied {
+            background: #1e5e20;
+        }
+        .copy-feedback {
+            display: inline-block;
+            margin-left: 10px;
+            color: #34a853;
+            font-size: 0.9em;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .copy-feedback.show {
+            opacity: 1;
         }
     </style>
 </head>
@@ -153,6 +168,7 @@
                 <div style="display: flex; align-items: center;">
                     <span id="demoUrl"></span>
                     <button class="copy-btn" onclick="copyDemoLink()">Copy Link</button>
+                    <span class="copy-feedback" id="copyFeedback">✓ Copied</span>
                 </div>
             </div>
         </div>
@@ -212,7 +228,16 @@
         function copyDemoLink() {
             const demoUrl = document.getElementById('demoUrl').textContent;
             navigator.clipboard.writeText(demoUrl).then(() => {
-                alert('Demo link copied to clipboard!');
+                const copyBtn = document.querySelector('.copy-btn');
+                const feedback = document.getElementById('copyFeedback');
+                
+                copyBtn.classList.add('copied');
+                feedback.classList.add('show');
+                
+                setTimeout(() => {
+                    copyBtn.classList.remove('copied');
+                    feedback.classList.remove('show');
+                }, 2000);
             });
         }
     </script>
