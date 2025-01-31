@@ -3,6 +3,7 @@ window.keywords = [];
 window.currentKeywordIndex = 0;
 window.typingInterval;
 window.customData = null;
+window.titleElement = document.getElementById('title');
 
 // Get DOM elements
 window.searchBox = document.getElementById('searchBox');
@@ -16,9 +17,14 @@ function init() {
     if (dataParam) {
         try {
             window.customData = JSON.parse(decodeURIComponent(dataParam));
-            window.keywords = window.customData.map(item => item.k);
+            // Extract keywords from the data array
+            window.keywords = window.customData.d.map(item => item.k);
             // Auto-populate keywords
             window.keywordInput.value = window.keywords.join('\n');
+            // Update title with business category
+            if (window.customData.c) {
+                window.titleElement.textContent = `Top Autosuggest for ${window.customData.c}`;
+            }
             // Start simulation after a short delay
             setTimeout(simulateTyping, 500);
         } catch (e) {
@@ -71,7 +77,7 @@ function simulateTyping() {
 function fetchSuggestions(query, isComplete) {
     // If we have custom data, use it
     if (window.customData) {
-        const currentEntry = window.customData.find(item => item.k === window.keywords[window.currentKeywordIndex]);
+        const currentEntry = window.customData.d.find(item => item.k === window.keywords[window.currentKeywordIndex]);
         if (currentEntry) {
             // Get organic suggestions
             let suggestions = generateOrganicSuggestions(query);
