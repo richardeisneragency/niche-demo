@@ -122,16 +122,6 @@
         .copy-btn:hover {
             background: #2d8a46;
         }
-        .category-panel {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-        }
     </style>
 </head>
 <body>
@@ -139,12 +129,6 @@
     <div class="subtitle">
         <strong>Create Your Custom Autosuggest Demo</strong><br>
         Enter your keywords and target suggestions below. Generate a shareable demo link to show your clients how their business name will appear in Google's autosuggest.
-    </div>
-    <div class="category-panel">
-        <div class="input-group">
-            <label for="businessCategory">Business Category:</label>
-            <input type="text" id="businessCategory" placeholder="e.g., Dentists, Plumbers, Real Estate Agents">
-        </div>
     </div>
     <div class="container">
         <div class="panel">
@@ -212,25 +196,14 @@
         }
 
         function generateDemoLink() {
-            const category = document.getElementById('businessCategory').value.trim();
-            
-            if (!category) {
-                alert('Please enter a business category');
-                return;
-            }
-
             if (keywords.length === 0) {
                 alert('Please add at least one keyword');
                 return;
             }
 
-            const data = {
-                c: category,
-                d: keywords
-            };
-
+            const data = encodeURIComponent(JSON.stringify(keywords));
             const baseUrl = window.location.href.replace('admin.html', 'index.html');
-            const demoUrl = `${baseUrl}?data=${encodeURIComponent(JSON.stringify(data))}`;
+            const demoUrl = `${baseUrl}?data=${data}`;
 
             document.getElementById('demoLink').style.display = 'block';
             document.getElementById('demoUrl').textContent = demoUrl;

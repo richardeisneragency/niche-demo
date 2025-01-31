@@ -20,35 +20,43 @@
             background: linear-gradient(45deg, #1a73e8, #4285f4);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            padding: 10px;
         }
         .subtitle {
             text-align: center;
-            color: #666;
-            font-size: 1.1em;
-            margin-bottom: 40px;
-            line-height: 1.6;
             max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 0 auto 40px;
+            font-size: 1.2em;
+            line-height: 1.6;
+            color: #5f6368;
+        }
+        .subtitle strong {
+            color: #1a73e8;
+            font-weight: 600;
         }
         .container {
+            display: flex;
+            gap: 30px;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
-            display: flex;
-            gap: 20px;
         }
         .panel {
             flex: 1;
+            padding: 25px;
+            border-radius: 15px;
             background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        h2 {
+        .panel:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.08);
+        }
+        .panel h2 {
             color: #1a73e8;
             margin-top: 0;
-            margin-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
         }
         #keywordInput {
             width: 100%;
@@ -63,34 +71,54 @@
             color: #1a73e8;
             font-family: monospace;
         }
-        .search-container {
+        #keywordInput:focus {
+            outline: none;
+            border-color: #1a73e8;
+        }
+        #startButton {
+            background: linear-gradient(45deg, #1a73e8, #4285f4);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        #startButton:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(26, 115, 232, 0.2);
+        }
+        #searchPanel {
             position: relative;
+        }
+        .search-container {
             max-width: 600px;
-            margin: 0 auto;
+            margin: 20px auto;
+            position: relative;
         }
         .search-box {
             width: 100%;
             padding: 12px 20px;
             font-size: 16px;
             border: 2px solid #e2e8f0;
-            border-radius: 24px;
+            border-radius: 30px;
             outline: none;
             transition: all 0.3s ease;
         }
-        .search-box:focus {
+        .search-box:hover, .search-box:focus {
             border-color: #1a73e8;
-            box-shadow: 0 0 0 3px rgba(26,115,232,0.2);
+            box-shadow: 0 4px 12px rgba(26, 115, 232, 0.15);
         }
         .suggestions {
             position: absolute;
-            top: 100%;
+            top: calc(100% + 5px);
             left: 0;
             right: 0;
             background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-top: 8px;
-            display: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             z-index: 1000;
             overflow: hidden;
         }
@@ -108,8 +136,6 @@
         .suggestion-item a {
             cursor: pointer;
             display: block;
-            text-decoration: none;
-            color: inherit;
         }
         .highlight {
             background-color: #ffeb3b;
@@ -159,7 +185,6 @@
             window.searchBox = document.getElementById('searchBox');
             window.suggestionsContainer = document.getElementById('suggestions');
             window.keywordInput = document.getElementById('keywordInput');
-            window.titleElement = document.querySelector('.main-title');
 
             // Load and execute the main script
             const script = document.createElement('script');
