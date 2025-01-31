@@ -118,24 +118,33 @@
         .copy-btn {
             margin-left: 10px;
             background: #34a853;
-            transition: all 0.2s ease;
+            position: relative;
+            transition: background 0.2s ease;
         }
         .copy-btn:hover {
             background: #2d8a46;
         }
-        .copy-btn.copied {
-            background: #1e5e20;
-        }
-        .copy-feedback {
-            display: inline-block;
-            margin-left: 10px;
-            color: #34a853;
-            font-size: 0.9em;
+        .copy-btn::after {
+            content: '✓';
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #34a853;
+            color: white;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             opacity: 0;
-            transition: opacity 0.2s ease;
+            transform: scale(0);
+            transition: all 0.2s ease;
         }
-        .copy-feedback.show {
+        .copy-btn.copied::after {
             opacity: 1;
+            transform: scale(1);
         }
     </style>
 </head>
@@ -168,7 +177,6 @@
                 <div style="display: flex; align-items: center;">
                     <span id="demoUrl"></span>
                     <button class="copy-btn" onclick="copyDemoLink()">Copy Link</button>
-                    <span class="copy-feedback" id="copyFeedback">✓ Copied</span>
                 </div>
             </div>
         </div>
@@ -229,15 +237,10 @@
             const demoUrl = document.getElementById('demoUrl').textContent;
             navigator.clipboard.writeText(demoUrl).then(() => {
                 const copyBtn = document.querySelector('.copy-btn');
-                const feedback = document.getElementById('copyFeedback');
-                
                 copyBtn.classList.add('copied');
-                feedback.classList.add('show');
-                
                 setTimeout(() => {
                     copyBtn.classList.remove('copied');
-                    feedback.classList.remove('show');
-                }, 2000);
+                }, 1000);
             });
         }
     </script>
