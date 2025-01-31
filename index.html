@@ -42,18 +42,20 @@
             margin: 0;
         }
         .read-more-btn {
-            background: #1a73e8;
-            color: white;
+            background: rgba(26, 115, 232, 0.1);
+            color: #1a73e8;
             border: none;
             padding: 8px 16px;
             border-radius: 20px;
             cursor: pointer;
             font-size: 0.9em;
             white-space: nowrap;
-            transition: background-color 0.2s;
+            transition: all 0.2s;
+            font-weight: 500;
         }
         .read-more-btn:hover {
-            background: #1557b0;
+            background: rgba(26, 115, 232, 0.15);
+            transform: translateY(-1px);
         }
         .modal-overlay {
             display: none;
@@ -291,6 +293,18 @@
         // Close modal when clicking outside
         document.getElementById('modal').addEventListener('click', function(e) {
             if (e.target === this) {
+                hideModal();
+            }
+        });
+
+        // Show modal on page load
+        window.addEventListener('load', function() {
+            setTimeout(showModal, 500); // Small delay to ensure smooth animation
+        });
+
+        // Close modal on ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
                 hideModal();
             }
         });
